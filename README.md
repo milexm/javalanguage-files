@@ -1,5 +1,4 @@
 # javalanguage-files
-# aws-ec2-client
 Java console application showing how to interact with Files in Java.
 For details see:
 <ul>
