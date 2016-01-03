@@ -79,7 +79,7 @@ public class SimpleUI {
 							break;
 						case 1:
 							// Show how to read a write a file using the Scanner class.
-							System.out.println(String.format("*** Read a write a file using Scanner *** %s", newline));
+							System.out.println(String.format("*** Read a write a file using Scanner and FileWriter *** %s", newline));
 							FileOperations.readWriteFileScanner("resources", "racers.txt", "racersw.txt");
 							break;
 						case 2:
@@ -91,7 +91,21 @@ public class SimpleUI {
 						case 3:
 							// Show how to read a write a file using RandomAccessFile class. 
 							System.out.println(String.format("*** Read a write a file using RandomAccessFile *** %s", newline));
-							RandomFileAccess.performRandomAccess("resources", "CreditProcessingData.dat", _input); 
+							String dir = null;
+							String file = null;
+					
+							System.out.println("Credit card file name or just enter to accept the default value:");
+							file = _input.nextLine();
+							if (file.equals("")) 
+									// Change this value to your actual file name.
+									file = "CreditProcessingData.dat";
+							System.out.println("Credit card file dir or just enter to accept the default value:");
+							dir = _input.nextLine();
+							if (dir.equals("")) 
+									// Change this value to your actual directory name.
+									dir = "Programming\\GitHub\\javalanguage-files\\Files\\resources";
+								
+							RandomFileAccess.performRandomAccess(dir, file, _input); 
 							break;
 							
 						case 9:
