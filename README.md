@@ -1,6 +1,5 @@
 # javalanguage-files
-Java console application showing how to interact with Files in Java.
-For details see:
+Console application that shows how to interact with files in Java. For more information, see:
 <ul>
 	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html" target="_blank">Scanner</a></li>
 	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html" target="_blank">FileReader</a></li>
