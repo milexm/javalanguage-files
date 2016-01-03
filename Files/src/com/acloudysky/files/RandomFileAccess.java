@@ -3,7 +3,6 @@ package com.acloudysky.files;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
-
 import com.acloudysky.util.Utilities;
 
 /**
@@ -37,6 +36,7 @@ public class RandomFileAccess {
 	// writing to a randomly accessed file. 
 	private static RandomAccessFile creditCardDataFile = null;
 	
+	
 	/*
 	 * Prompt user for input.
 	 * Read user's input.
@@ -60,7 +60,7 @@ public class RandomFileAccess {
 	
 
 	/**
-	 * Obtain the card number form the user.
+	 * Obtain the card number from the user.
 	 * Assure that the number is in the correct format using regualr expression
 	 * pattern matching.
 	 * @param input The Scanner object to obtain user's input.
@@ -95,24 +95,28 @@ public class RandomFileAccess {
 		return Double.parseDouble(input.nextLine());
 	}
 
+	/*
+	 * Get the card position in the file.
+	 */
 	private static int findCardPosition(long cardNumber, RandomAccessFile f) throws IOException
 	{
 		
-		//record length = long[8 bytes] + double[8 bytes]
+		// Record length = long[8 bytes] + double[8 bytes].
 		long totalRecords = f.length() / RECORD_LENGTH;  
 		
 		for (int i = 0; i < totalRecords; i++)
 		{
-			f.seek(i * RECORD_LENGTH);  //move to the start of the next record
-			//get the next card number
+			// Move to the start of the next record.
+			f.seek(i * RECORD_LENGTH);  
+			// Get the next card number.
 			long ccNum = f.readLong();
-			//if is a match, return i
+			// If is a match, return i
 			if (ccNum == cardNumber)
 			{
 				return i;
 			}
 		}
-		//if no match, return -1
+		// If no match, return -1
 		return -1;
 	}
 	
@@ -154,6 +158,7 @@ public class RandomFileAccess {
 		
 		System.out.println("Please enter the 16-digit number of the card to view:");
 		ccNum = Long.parseLong(input.nextLine());
+		// Get the card position in the file.
 		position = findCardPosition(ccNum, creditCardDataFile);
 		if (position >= 0)
 		{
@@ -179,6 +184,7 @@ public class RandomFileAccess {
 		
 		System.out.println("Please enter the 16-digit number of the card to view:");
 		ccNum = Long.parseLong(input.nextLine());
+		// Get the card position in the file. 
 		position = findCardPosition(ccNum, creditCardDataFile);
 		
 		if (position >= 0)
@@ -232,26 +238,25 @@ public class RandomFileAccess {
 	 * @param input The Scanner object to allow user's input.
 	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html" target="_blank">Scanner</a>
 	 */
-	public static void performRandomAccess(String resourceFolder, String fileName, Scanner input) {
+	public static void performRandomAccess(String resourceFolder, String fileName, Scanner input)  {
 		
 	
-		/**
+		/*
 		 * Get the absolute path of the file containing credit card information.
-		 * Use the {@link com.acloudysky.util.Utilities#getResourceAbsolutePath(String, String)} to obtain the 
 		 */
-		dataFileAbsolutePath = Utilities.getResourceAbsolutePath(resourceFolder, fileName);
-		
+		dataFileAbsolutePath = Utilities.getFileAbsolutePath(resourceFolder, fileName);
+	
 		try
 		{
-			// Open the credit card file for read/write.
-			// If the file exists, let's load it up; 
-			// otherwise, we'll just create a new one.
+			/* Open the credit card file for read/write. If the file exists, load it up; 
+			 * otherwise, just create a new one.
+			 */
 			creditCardDataFile = new RandomAccessFile(dataFileAbsolutePath, "rw");
 			
 			boolean done = false;
 			input = new Scanner(System.in);
 			
-			// Get user's choice
+			// Get user's choice.
 			do
 			{
 				displayRandomAccesstMenu();
@@ -301,6 +306,5 @@ public class RandomFileAccess {
 			}
 		}
 
-		
 	}
 }
