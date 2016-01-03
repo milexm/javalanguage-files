@@ -14,6 +14,7 @@ import com.acloudysky.util.Utilities;
 
 /**
  * Show how to perform file I/O operations.
+ * 
  * @author Michael
  *
  */
@@ -23,18 +24,19 @@ public  class  FileOperations {
 	private static ArrayList<String> readStrings = new ArrayList<String>();
 	
 	
-   
-	
 	// Simple text scanner which can parse primitive types and 
 	// strings using regular expressions. 
 	private static Scanner input = null;
 	
 	/**
 	 * Read a text file using the Scanner class.
-	 * @param inputFilePath  The file path.
-	 * @see Scanner
+	 * @param inputFilePath  The path of the file to read.
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html" target="_blank">Scanner</a>
 	 */
-	private static void readFileScanned(String inputFilePath) {
+	public static void readFileScanned(String inputFilePath) {
+		
+		System.out.println(String.format("*** Reading file: %s ***", inputFilePath));
+		
 		try
 		{
 			// Open the file using the Scanner object.
@@ -49,8 +51,8 @@ public  class  FileOperations {
 				String nextString = input.nextLine();
 				// Store the string.
 				readStrings.add(nextString);
-				// Display the added string.
-				System.out.println(nextString + " added...");	
+				// Display the read string.
+				System.out.println(nextString + " read...");	
 			}	
 			if (input != null)
 			{
@@ -68,13 +70,16 @@ public  class  FileOperations {
 	
 	/**
 	 * Write to the output file using the FileWriter class.
-	 * @param outputFilePath The path of the output file.
-	 * @see FileWriter
+	 * @param outputFilePath The path of the file to write.
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html" target="_blank">FileWriter</a>
 	 */
-	private static void writeFileScanned(String outputFilePath) {
+	public static void writeFileScanned(String outputFilePath) {
 		
 		// Convenience class for writing character files. 
 		FileWriter fw = null;
+		
+		System.out.println(String.format("*** Writing file: %s ***", outputFilePath));
+		
 		try
 		{
 			fw = new FileWriter(outputFilePath);
@@ -89,8 +94,9 @@ public  class  FileOperations {
 				//and then we'll save the data to a new file "RacersModified"
 				int age = r.nextInt((max - min)) + min + 1;  //0 based
 				
-				String output = s + "|" + age + "\n";
-				fw.write(output);
+				String output = s + "|" + age;
+				fw.write(output + "\n");
+				System.out.println(output + " written ...");
 			}
 		}
 		catch (IOException ioex)
@@ -115,18 +121,18 @@ public  class  FileOperations {
 	
 	/**
 	 * Read and write the specified file.
-	 * @param resourceFolder  The name of the resource folder.
+	 * @param dir  The name of the directory which contains the files.
 	 * @param inputFileName   The name of the text file to read.
 	 * @param outputFileName  The name of the text file to write.
 	 */
-	public static void readWriteFileScanner(String resourceFolder, String inputFileName, String outputFileName) 
+	public static void readWriteFileScanner(String dir, String inputFileName, String outputFileName) 
 	{
 		
 		// Get input file absolute path.
-		String inputFileAbsolutePath =  Utilities.getResourceAbsolutePath(resourceFolder, inputFileName);
+		String inputFileAbsolutePath =  Utilities.getResourceAbsolutePath(dir, inputFileName);
 		
 		// Get output file absolute path.
-		String outputFileAbsolutePath =  Utilities.getResourceAbsolutePath(resourceFolder, outputFileName);
+		String outputFileAbsolutePath =  Utilities.getResourceAbsolutePath(dir, outputFileName);
 				
 		// Read the input file.
 		readFileScanned(inputFileAbsolutePath);
@@ -138,14 +144,18 @@ public  class  FileOperations {
 	}
 	 
 	/**
-	 * Read input text file.
-	 * @param inputFilePath - The input file path.
+	 * Read a text file using the FileReader and BufferedReader classes.
+	 * @param inputFilePath  The path of the file to read.
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/FileReader.html" target="_blank">Scanner</a>
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html" target="_blank">BufferedWriter</a>
 	 */
 	public static void readFileBuffered(String inputFilePath) 
 	{
 		FileReader fr = null;
 		BufferedReader br = null;
 		readStrings.clear();
+		
+		System.out.println(String.format("*** Reading file: %s ***", inputFilePath));
 		
 		try 
 		{
@@ -159,7 +169,7 @@ public  class  FileOperations {
 			{
 				// Add to the String array.
 				readStrings.add(nextLine);
-				System.out.println("Added " + nextLine);
+				System.out.println(nextLine + " read...");
 			}
 			
 		} 
@@ -190,14 +200,19 @@ public  class  FileOperations {
 		
 	}
 	
+
 	/**
-	 * Write to the output file. 
-	 * @param outputFilePath  The output file path.
+	 * Write to the output file using the FileWriter and BufferedWriter classes.
+	 * @param outputFilePath The path of the file to write.
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html" target="_blank">FileWriter</a>
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html" target="_blank">BufferedWriter</a>
 	 */
 	public static void writeFileBuffered(String outputFilePath) 
 	{
 		FileWriter fw = null;
 		BufferedWriter bw = null;
+		
+		System.out.println(String.format("*** Writing file: %s ***", outputFilePath));
 		
 		try 
 		{
@@ -215,6 +230,7 @@ public  class  FileOperations {
 				String output = s + "|" + age;
 				bw.write(output);
 				bw.newLine();
+				System.out.println(output + " written ...");
 			}
 		} 
 		catch (IOException ioex1) 
