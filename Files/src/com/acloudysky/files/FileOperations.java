@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import com.acloudysky.util.Utilities;
 
 /**
  * Show how to perform file I/O operations.
@@ -125,7 +124,7 @@ public  class  FileOperations {
 	 * @param inputFileName   The name of the text file to read.
 	 * @param outputFileName  The name of the text file to write.
 	 */
-	public static void readWriteFileScanner(String dir, String inputFileName, String outputFileName) 
+	public void readWriteFileScanned(String dir, String inputFileName, String outputFileName) 
 	{
 		
 		// Get input file absolute path.
@@ -268,7 +267,7 @@ public  class  FileOperations {
 	 * @param inputFileName   The name of the text file to read.
 	 * @param outputFileName  The name of the text file to write.
 	 */
-	public static void readWriteFileBuffered(String resourceFolder, String inputFileName, String outputFileName) 
+	public void readWriteFileBuffered(String resourceFolder, String inputFileName, String outputFileName) 
 	{
 		
 		// Get input file absolute path.
