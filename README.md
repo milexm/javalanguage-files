@@ -13,9 +13,6 @@ Console application that shows how to interact with files in Java. For more info
 
 Also, see the companion blog post at this location: <a href="http://acloudysky.com/TBD/" target="_blank">TBD</a>.
 
-<h2>Dependencies</h2>
-To run the application you must include the Utilities project.
-
 <h2>Running the Example</h2>
 
 <ol>
