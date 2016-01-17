@@ -5,6 +5,10 @@ Console application that shows how to interact with files in Java. For more info
 	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html" target="_blank">FileReader</a></li>
 	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html" target="_blank">FileWriter</a></li>
 	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/RandomAccessFile.html" target="_blank">RandomAccessFile</a></li>
+	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html" target="_blank">FileInputStream</a></li>
+	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileOutputStream.html" target="_blank">FileOutputStream</a> </li>
+	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html" target="_blank">ObjectInputStream</a> </li>
+	<li><a href="https://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html" target="_blank">ObjectOutputStream</a> </li>
 </ul>
 
 Also, see the companion blog post at this location: <a href="http://acloudysky.com/TBD/" target="_blank">TBD</a>.
