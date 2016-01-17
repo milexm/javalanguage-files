@@ -1,12 +1,14 @@
 package com.acloudysky.files;
 
+import java.io.Serializable;
+
 /**
  * Define a simple credit card structure which contains credit 
  * card number and balance.
  * @author Michael
  *
  */
-public class CreditCard 
+public class CreditCard implements Serializable 
 {
 	//long for # [8 bytes]
 	private long _ccNum;
@@ -18,6 +20,7 @@ public class CreditCard
 	{
 		//do nothing
 	}
+	
 	
 	/**
 	 * Create a CreditCard object.

@@ -3,7 +3,7 @@ package com.acloudysky.files;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
-import com.acloudysky.util.Utilities;
+
 
 /**
  * Show how to use <a href="https://docs.oracle.com/javase/8/docs/api/java/io/RandomAccessFile.html" target="_blank">RandomAccessFile</a>
@@ -28,46 +28,20 @@ import com.acloudysky.util.Utilities;
 public class RandomFileAccess {
 
 	// Absolute path of the random accessed file.
-	private static String dataFileAbsolutePath;
+//	private static String dataFileAbsolutePath;
 	
 	private static final int RECORD_LENGTH = 16;
 	
-	// Instances of the RandomAccessFile class support both reading and 
-	// writing to a randomly accessed file. 
-	private static RandomAccessFile creditCardDataFile = null;
 	
 	
-	/*
-	 * Prompt user for input.
-	 * Read user's input.
-	 */
-	private static int readUserInput(Scanner input) {
-		System.out.print(">>");
-		int result = Integer.parseInt(input.nextLine());
-		return result;
-	}
-	
-	/*
-	 * Display the menu so the user can select the credit card operation to perform.
-	 */
-	private static void displayRandomAccesstMenu()
-	{
-		StringBuilder menu = Utilities.createRandomFilesSubMenu();
-		// Display the menu.
-		System.out.println(menu.toString());
-		
-	}
-	
-
 	/**
 	 * Obtain the card number from the user.
 	 * Assure that the number is in the correct format using regualr expression
 	 * pattern matching.
 	 * @param input The Scanner object to obtain user's input.
 	 * @return The card number entered by the user.
-	 * @see 
 	 */
-	private static long getCardNumber(Scanner input)
+	private long getCardNumber(Scanner input)
 	{
 		
 		String matchPattern = "[0-9]{16}";
@@ -89,7 +63,12 @@ public class RandomFileAccess {
 		return -1;
 	}
 	
-	private static double getBalance(Scanner input)
+	/**
+	 * Obtain the card balance from the user.
+	 * @param input The Scanner object to obtain user's input.
+	 * @return The card balance entered by the user.
+	 */
+	private double getBalance(Scanner input)
 	{
 		System.out.println("Please enter the current card balance:");
 		return Double.parseDouble(input.nextLine());
@@ -98,7 +77,7 @@ public class RandomFileAccess {
 	/*
 	 * Get the card position in the file.
 	 */
-	private static int findCardPosition(long cardNumber, RandomAccessFile f) throws IOException
+	private int findCardPosition(long cardNumber, RandomAccessFile f) throws IOException
 	{
 		
 		// Record length = long[8 bytes] + double[8 bytes].
@@ -120,18 +99,21 @@ public class RandomFileAccess {
 		return -1;
 	}
 	
-	private static void displayCardDetails(int position, RandomAccessFile f) throws IOException
+	private void displayCardDetails(int position, RandomAccessFile f) throws IOException
 	{
 		f.seek(position * RECORD_LENGTH);
 		CreditCard cc = new CreditCard(f.readLong(), f.readDouble());
 		System.out.println("Card Details: " + cc.toString());
 	}
 	
-	/*
+	
+	/**
 	 * Add a new credit card to the file.
-	 * {@link CreditCar}
+	 * @param input The Scanner object to obtain user's input.
+	 * @param creditCardDataFile The file to hold the credit card data.
+	 * @throws IOException Exception due to I/O error
 	 */
-	private static void addCreditCard(Scanner input) throws IOException {
+	public void addCreditCard(Scanner input, RandomAccessFile creditCardDataFile) throws IOException {
 		
 		// Create a credit card object.
 		CreditCard cc = new CreditCard();
@@ -152,7 +134,13 @@ public class RandomFileAccess {
 	 * Find a view specific credit card information.
 	 * Ask the user to enter the number of the credit card. 
 	 */
-	private static void findCreditCard(Scanner input) throws IOException {
+	/**
+	 * Find a view credit card selected by the user.
+	 * @param input The Scanner object to obtain user's input.
+	 * @param creditCardDataFile The file holding the credit card data.
+	 * @throws IOException Exception due to I/O error
+	 */
+	public void findCreditCard(Scanner input, RandomAccessFile creditCardDataFile) throws IOException {
 		int position;
 		long ccNum;
 		
@@ -176,7 +164,14 @@ public class RandomFileAccess {
 	/*
 	 * Update credit card information.
 	 */
-	private static void updateCreditCard(Scanner input) throws IOException {
+	
+	/**
+	 * Update credit card information.
+	 * @param input The Scanner object to obtain user's input.
+	 * @param creditCardDataFile The file to hold the credit card data.
+	 * @throws IOException Exception due to I/O error
+	 */
+	public void updateCreditCard(Scanner input, RandomAccessFile creditCardDataFile) throws IOException {
 		
 		int position;
 		long ccNum;
@@ -209,11 +204,18 @@ public class RandomFileAccess {
 	/*
 	 * List all the stored credit cards.
 	 */
-	private static void listCreditCards() throws IOException {
+	/**
+	 * Display credit card information.
+	 * @param creditCardDataFile The file holding the credit card data.
+	 * @throws IOException Exception due to I/O error
+	 */
+	public void listCreditCards(RandomAccessFile creditCardDataFile) throws IOException {
 		
 		// list all data
 		System.out.println("");
+		
 		long totalRecords = creditCardDataFile.length() / RECORD_LENGTH;
+		
 		if (totalRecords == 0)
 		{
 			System.out.println("No current cards on file.");
@@ -228,83 +230,4 @@ public class RandomFileAccess {
 		System.out.println("");
 	}
 	
-	
-	/**
-	 * Perform random access operation on the passed file. 
-	 * Use the {@link com.acloudysky.util.Utilities#getResourceAbsolutePath(String, String)} to obtain the 
-	 * file absolute path.
-	 * @param resourceFolder The name of the resources folder.
-	 * @param fileName The name of the file containing credit card information.
-	 * @param input The Scanner object to allow user's input.
-	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html" target="_blank">Scanner</a>
-	 */
-	public static void performRandomAccess(String resourceFolder, String fileName, Scanner input)  {
-		
-	
-		/*
-		 * Get the absolute path of the file containing credit card information.
-		 */
-		dataFileAbsolutePath = Utilities.getFileAbsolutePath(resourceFolder, fileName);
-	
-		try
-		{
-			/* Open the credit card file for read/write. If the file exists, load it up; 
-			 * otherwise, just create a new one.
-			 */
-			creditCardDataFile = new RandomAccessFile(dataFileAbsolutePath, "rw");
-			
-			boolean done = false;
-			input = new Scanner(System.in);
-			
-			// Get user's choice.
-			do
-			{
-				displayRandomAccesstMenu();
-			
-				int choice = readUserInput(input);
-				
-				switch(choice)
-				{
-					case 1:
-						// Add a new card to the end of the file.
-						addCreditCard(input);
-						break;
-					case 2:
-						// Find and view credit card. 
-						findCreditCard(input);
-						break;
-					case 3:
-						// Update card details.
-						updateCreditCard(input);
-						break;
-					case 4:
-						// List credit card data.
-						listCreditCards();
-						break;
-					case 5:
-					default:
-						done = true;
-						break;
-				}
-			} while (!done);
-			
-			System.out.println("Thank you for using the credit card manager");
-		}
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
-		}
-		finally
-		{
-			if (creditCardDataFile != null)
-			{
-				try {
-					creditCardDataFile.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
 }
