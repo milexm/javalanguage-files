@@ -12,12 +12,21 @@ import java.util.Scanner;
 
 
 /**
- * Show how to perform file I/O operations.
+ * Read and write character (text) files.
+ * FileReader reads streams of characters. FileWriter writes streams of characters. 
+ * BufferedReader reads text from a character-input stream, buffering characters so as to provide for 
+ * the efficient reading of characters, arrays, and lines.
+ * BufferedWriter writes text to a character-output stream, buffering characters so as to provide for 
+ * the efficient writing of single characters, arrays, and strings.
+ * @see <a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html" target="_blank">FileReader</a>
+ * @see <<a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html" target="_blank">FileWriter</a>
+ * @see <a href="http://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html" target="_blank">BufferedReader</a>
+ * @see <a href="http://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html" target="_blank">BufferedWriter</a>
  * 
  * @author Michael
- *
+ * 
  */
-public  class  FileOperations {
+public  class  CharacterFileAccess {
 
 	// Variable to store file content.
 	private static ArrayList<String> readStrings = new ArrayList<String>();
